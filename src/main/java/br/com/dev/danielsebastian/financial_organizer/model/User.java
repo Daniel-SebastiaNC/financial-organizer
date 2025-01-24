@@ -56,4 +56,14 @@ public class User {
     public void setMoney(Set<Money> money) {
         this.money = money;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", total_Money=" + total_Money +
+                ", money=" + money +
+                '}';
+    }
 }

@@ -1,5 +1,6 @@
 package br.com.dev.danielsebastian.financial_organizer.model;
 
+import br.com.dev.danielsebastian.financial_organizer.dtos.MoneyDto;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -14,7 +15,7 @@ public class Money {
     @Column(nullable = false, unique = false)
     private String name;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private Double money;
 
     @Column(nullable = false)
@@ -29,6 +30,14 @@ public class Money {
 
 
     public Money(){}
+
+    public Money(MoneyDto dto, User user){
+        this.name = dto.name();
+        this.money = dto.money();
+        this.date = LocalDate.now();
+        this.isPositive = dto.isPositive();
+        this.user = user;
+    }
 
     public Long getId() {
         return id;
@@ -76,5 +85,17 @@ public class Money {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Money{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", money=" + money +
+                ", date=" + date +
+                ", isPositive=" + isPositive +
+                ", user=" + user +
+                '}';
     }
 }
