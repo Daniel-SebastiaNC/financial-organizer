@@ -6,10 +6,10 @@ import br.com.dev.danielsebastian.financial_organizer.model.User;
 import br.com.dev.danielsebastian.financial_organizer.repository.MoneyRepository;
 import br.com.dev.danielsebastian.financial_organizer.repository.UserRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class MoneyService {
@@ -38,38 +38,45 @@ public class MoneyService {
         userRepository.save(user);
         moneyRepository.save(money);
 
-
-
-        /*
-
-
-            money.setName(dto.listInput().get(i).name());
-            money.setMoney(dto.listInput().get(i).money());
-            money.setDate(LocalDate.now());
-            money.setPositive(dto.listInput().get(i).isPositive());
-
-            if(money.isPositive()){
-                positive += money.getMoney();
-            } else {
-                negative -= money.getMoney();
-            }
-            var plus = positive + negative;
-
-            var user = userRepository.findById(dto.listInput().get(i).idUser());
-            if (user.isEmpty()){
-                ResponseEntity.badRequest();
-            }
-            user.get().setTotal_Money(plus);
-            money.setUser(user.get());
-
-            userRepository.save(user.get());
-            moneyRepository.save(money);
-        }
-
-        */
-
         //return ResponseEntity.ok("ok"); //status(HttpStatus.CREATED).build();//.body();
 
+    }
+
+    public List<Money> showAll(Long id) {
+
+        Optional<User> userOptional = userRepository.findById(id);
+
+        if (userOptional.isEmpty()) {
+            throw new RuntimeException();
+        }
+
+        return userOptional.get().getMoney();
+    }
+
+    public List<Money> showAllPositive(Long id) {
+        var all = showAll(id);
+
+        List<Money> positive = new ArrayList<>();
+        for (Money money : all) {
+            if (money.isPositive()) {
+                positive.add(money);
+            }
+        }
+
+        return positive;
+    }
+
+    public List<Money> showAllNegative(Long id) {
+        var all = showAll(id);
+
+        List<Money> negative = new ArrayList<>();
+        for (Money money : all) {
+            if (!money.isPositive()) {
+                negative.add(money);
+            }
+        }
+
+        return negative;
     }
 
     //Teste
@@ -77,16 +84,5 @@ public class MoneyService {
         moneyRepository.deleteById(id);
     }
 
-    public Set<Money> showmonth(Long id) {
 
-        Optional<User> user = userRepository.findById(id);
-
-        if (user.isEmpty()) {
-            throw new RuntimeException();
-        }
-
-        return user.get().getMoney();
-
-
-    }
 }

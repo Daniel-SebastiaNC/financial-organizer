@@ -2,11 +2,10 @@ package br.com.dev.danielsebastian.financial_organizer.controller;
 
 import br.com.dev.danielsebastian.financial_organizer.dtos.MoneyDto;
 import br.com.dev.danielsebastian.financial_organizer.model.Money;
-import br.com.dev.danielsebastian.financial_organizer.model.User;
 import br.com.dev.danielsebastian.financial_organizer.service.MoneyService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Set;
+import java.util.List;
 
 @RestController
 public class MoneyController {
@@ -28,9 +27,19 @@ public class MoneyController {
 
     }
 
-    @GetMapping("/showmonth/{id}")
-    public Set<Money> showmonth(@PathVariable("id") Long id){
-        return moneyService.showmonth(id);
+    @GetMapping("/showAll/{id}")
+    public List<Money> showAll(@PathVariable("id") Long id){
+        return moneyService.showAll(id);
+    }
+
+    @GetMapping("/showAllPositive/{id}")
+    public List<Money> showAllPositive(@PathVariable("id") Long id){
+        return moneyService.showAllPositive(id);
+    }
+
+    @GetMapping("/showAllNegative/{id}")
+    public List<Money> showAllNegative(@PathVariable("id") Long id){
+        return moneyService.showAllNegative(id);
     }
 
     @GetMapping("/helloworld")

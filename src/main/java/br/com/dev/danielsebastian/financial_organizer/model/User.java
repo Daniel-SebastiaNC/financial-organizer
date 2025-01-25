@@ -3,8 +3,8 @@ package br.com.dev.danielsebastian.financial_organizer.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "T_USER")
@@ -21,7 +21,7 @@ public class User {
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private Set<Money> money = new HashSet<>();
+    private List<Money> money = new ArrayList<>();
 
     public User(){}
 
@@ -49,11 +49,11 @@ public class User {
         this.total_Money = total_Money;
     }
 
-    public Set<Money> getMoney() {
+    public List<Money> getMoney() {
         return money;
     }
 
-    public void setMoney(Set<Money> money) {
+    public void setMoney(List<Money> money) {
         this.money = money;
     }
 
