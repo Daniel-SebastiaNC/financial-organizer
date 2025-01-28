@@ -5,6 +5,7 @@ import br.com.dev.danielsebastian.financial_organizer.model.Money;
 import br.com.dev.danielsebastian.financial_organizer.service.MoneyService;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -27,6 +28,8 @@ public class MoneyController {
 
     }
 
+    //All History
+
     @GetMapping("/showAll/{id}")
     public List<Money> showAll(@PathVariable("id") Long id){
         return moneyService.showAll(id);
@@ -42,7 +45,26 @@ public class MoneyController {
         return moneyService.showAllNegative(id);
     }
 
-    @GetMapping("/helloworld")
+    //MONTH
+
+    @GetMapping("/showMonthAll/{id}")
+    public List<Money> showMonthAll(@PathVariable("id") Long id, @RequestBody LocalDate date) {
+        return moneyService.showMonthAll(id, date);
+    }
+
+    @GetMapping("/showMonthPositive/{id}")
+    public List<Money> showMonthPositive(@PathVariable("id") Long id, @RequestBody LocalDate date) {
+        return moneyService.showMonthPositive(id, date);
+    }
+
+    @GetMapping("/showMonthNegative/{id}")
+    public List<Money> showMonthNegative(@PathVariable("id") Long id, @RequestBody LocalDate date) {
+        return moneyService.showMonthNegative(id, date);
+    }
+
+    //HELLO
+
+    @GetMapping("/hello")
     String helloWorld(){
         return "Hello World";
     }
